@@ -46,16 +46,10 @@ export default class A {
         // download snapshot
         var date = new Date(Date.parse(this.model.date));
         var dateObj = {
-            YYYY: "2019",
-            DD: "04",
-            MM: "06",
-        }
-        /*
-        {
             YYYY: date.getYear(),
             DD: date.getDate(),
             MM: date.getMonth() + 1,
-        }*/
+        }
         var url = format(this.model.snapshot_url_format, dateObj);
         var resp = await fetch(url);
         var csv = await resp.text();
@@ -69,8 +63,8 @@ export default class A {
         var csv = await this.getText('original_snapshot.csv');
         return await CSVtoArrayOrig(csv);
     }
-    async getTransformedAccounts() {
-        var csv = await this.getText('transformed.csv');
+    async getLatestAccounts() {
+        var csv = await this.getText('latest.csv');
         return await CSVtoArray(csv);
     }
     async saveTransformedAsLatest() {
@@ -84,19 +78,20 @@ export default class A {
     async populateLatest() {
         var csv = await this.getText('latest.csv');
         var arrayObj = await CSVtoArray(csv);
+        var accountPairsToProcess = arrayObj.filter(p => p.balance > 0)
         var batch = [];
-        for (var i = 0; i < arrayObj.length; i++) {
-            //await this.populateSingle(arrayObj[i]);
-            if (arrayObj[i].balance == 0)
-                continue;
-            batch.push(this.populateSingle(arrayObj[i]));
+        var processed = 0;
+        for (var i = 0; i < accountPairsToProcess.length; i++) {
+            batch.push(this.populateSingle(accountPairsToProcess[i]));
             if (batch.length >= 500) {
-
+                console.log(`Processed ${processed} / ${accountPairsToProcess.length}`)
                 await Promise.all(batch);
+                processed += batch.length;
                 batch = [];
             }
         }
         await Promise.all(batch);
+        console.log(`Processed all`)
     }
     async populateSingle(accountobj) {
         console.log(accountobj.account)

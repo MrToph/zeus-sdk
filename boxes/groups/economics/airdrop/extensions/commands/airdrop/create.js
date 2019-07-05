@@ -12,7 +12,7 @@ module.exports = {
             describe: '',
             default: ''
         }).option('grab-memo', {
-            describe: 'memo every account will get on "issue" after grab',
+            describe: 'memo every account will get on "transfer" sent by "grab"',
             default: 'Congrats, You can claim {{TKN}} tokens provided to you through an airdrop'
         }).option('notify-memo', {
             describe: 'memo format every account will get on "issueairdrop"',
@@ -28,7 +28,7 @@ module.exports = {
         }).option('prefix', {
             describe: '',
         }).option('date', {
-            describe: '',
+            describe: 'date in YYYY-MM-DD that will be used to download the snapshot',
         }).option('token-contract', {
             describe: '',
         }).option('airdrop-contract', {

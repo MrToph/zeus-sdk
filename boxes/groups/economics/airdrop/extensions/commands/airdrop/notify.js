@@ -30,11 +30,11 @@ module.exports = {
             precision = precisionParts[1].length;
         }
         // iterate, call issueairdrop
-        var accounts = await snapshotHelpers.handler.getTransformedAccounts();
+        var accounts = await snapshotHelpers.handler.getLatestAccounts();
         for (var i = 0; i < accounts.length; i++) {
             var account = accounts[i];
             // transform memo
-            var memo = snapshotHelpers.format(snapshotHelpers.model.grab_memo, { ...snapshotHelpers.model, ...account });
+            var memo = snapshotHelpers.format(snapshotHelpers.model.notify_memo, { ...snapshotHelpers.model, ...account });
             // todo: transform precision
             var balance = account.balance;
             if (balance == 0)

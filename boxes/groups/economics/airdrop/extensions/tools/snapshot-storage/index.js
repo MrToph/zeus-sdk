@@ -7,7 +7,7 @@ var { getEos } = require('../eos/utils');
 export default async function(args) {
     var model = (await loadModels('airdrops')).find(a => a.name === args['name']);
     var handler = new s3StorageHandler(args, model);
-    var eos = await getEos(null, args);
+    var eos = await getEos(null, args.network ?  args : undefined);
 
     return {
         model,
