@@ -1,6 +1,6 @@
 var s3StorageHandler = require('./s3').default;
 var { loadModels } = require('../models');
-var format = require('./format');
+var format = require('./format').default;
 var { getEos } = require('../eos/utils');
 
 // factory

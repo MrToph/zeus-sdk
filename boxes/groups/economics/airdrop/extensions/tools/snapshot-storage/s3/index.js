@@ -98,8 +98,8 @@ export default class A {
         return this.saveText(accountobj.balance.toString().trim(), `entries/${accountobj.account}`);
     }
     getLatestURLPrefix() {
-        var prefix = `${this.model.storage.prefix}/${this.model.storage.name}/entries/`;
-        var url_prefix = `https://s3.amazonaws.com/${this.model.storage.bucket}/${prefix}`;
+        var prefix = `${this.model.storage.prefix}/${this.model.name}/entries/`;
+        var url_prefix = `https://${this.model.storage.bucket}.s3.amazonaws.com/${prefix}`;
         return url_prefix;
     }
 };
